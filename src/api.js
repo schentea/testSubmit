@@ -1,13 +1,16 @@
 export async function apiPostNoticeWrite(formData) {
   try {
     // console.log(formData);
-    return await fetch("http://localhost:4000/notice/write", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    }).then((res) => res.json());
+    return await fetch(
+      "https://confidential-kathrine-schentea.koyeb.app/notice/write",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    ).then((res) => res.json());
   } catch (error) {
     console.log(error);
   }
