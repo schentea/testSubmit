@@ -1,8 +1,10 @@
 import { useQuery } from "react-query";
 import { apiGetNoticeList } from "./api";
+import { Link } from "react-router-dom";
+import { timeFormat } from "./timeFormat";
 
 export default function List() {
-  const { data, isLoading } = useQuery("List", apiGetNoticeList);
+  const { data } = useQuery("List", apiGetNoticeList);
   console.log(data);
   return (
     <div className="w-full flex justify-center py-16">
@@ -14,11 +16,13 @@ export default function List() {
               key={index}
               className="grid grid-cols-[2fr_1fr_3fr_1fr_1fr] py-2 odd:bg-red-100 px-2 border-b-2"
             >
-              <div>{item._id}</div>
+              <Link to={`/${item._id}`}>
+                <div>{item._id}</div>
+              </Link>
               <div>{item.title}</div>
               <div>{item.description}</div>
               <div>{item.writer}</div>
-              <div>{item.createdAt?.substr(0, 10)}</div>
+              <div>{timeFormat(item.createdAt)}</div>
             </div>
           ))}
         </div>

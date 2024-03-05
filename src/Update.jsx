@@ -12,7 +12,7 @@ export default function Update() {
   const {
     register,
     handleSubmit,
-    reset,
+
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -24,8 +24,8 @@ export default function Update() {
   const { mutate, isLoading } = useMutation(apiPostNoticeUpdate, {
     onSuccess: (data) => {
       console.log(data);
-      reset();
-      navigate("/");
+
+      navigate(`/${id}`);
     },
   });
   const onSubmit = (formData) => {

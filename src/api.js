@@ -47,23 +47,16 @@ export async function apiPostNoticeUpdate(props) {
     console.log(error);
   }
 }
-
-// export async function apiTest() {
-//   try {
-//     return await fetch(`${BASE_URL}/test1`)
-//       .then((res) => res.json())
-//       .then((data) => {
-//         console.log(data);
-//       });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
-// export async function apiTest2() {
-//   try {
-//     return await fetch(`${BASE_URL}/people`).then((res) => res.json());
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+//삭제
+export async function apiPostNoticeDelete(id) {
+  try {
+    return await fetch(`${BASE_URL}/notice/${id}/delete`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+  } catch (error) {
+    console.log(error);
+  }
+}

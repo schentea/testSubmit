@@ -1,23 +1,40 @@
-import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
-import { apiGetNoticeDetail } from "./api";
+import { useMutation, useQuery } from "react-query";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { apiGetNoticeDetail, apiPostNoticeDelete } from "./api";
 
 export default function Detail() {
   const { id } = useParams();
-  const { data, isLoading } = useQuery(["Detail", id], apiGetNoticeDetail);
+  const { data } = useQuery(["Detail", id], apiGetNoticeDetail);
+  const navigate = useNavigate();
+  const { mutate } = useMutation(apiPostNoticeDelete, {
+    onSuccess: (data) => {
+      if (data?.result === true) {
+        navigate("/");
+      }
+    },
+  });
+  const handleDelete = () => {
+    const ok = window.confirm("삭제하시겠습니까?");
+    if (ok) {
+      //확인 클릭시 삭제 api 요청
+      mutate(id);
+    }
+  };
   return (
     <div className="w-full flex justify-center py-16">
-      <div className="max-w-5xl w-full flex flex-col gap-4 *border-b-2">
+      <div className="max-w-5xl w-full flex flex-col gap-4 ">
         <div>자세히 보기</div>
-        <div>{data?.data.title}</div>
-        <div>{data?.data.writer}</div>
-        <div>{data?.data.createAt}</div>
-        <div>{data?.data.description}</div>
-        <div className="flex gap-4 text-white *:px-4 py-2">
-          <Link to={`/${id}/edit`}>
-            <button className="bg-green-500 ">수정</button>
+        <div>{data?.data?.title}</div>
+        <div>{data?.data?.writer}</div>
+        <div>{data?.data?.createAt}</div>
+        <div>{data?.data?.description}</div>
+        <div className="flex gap-4 text-white ">
+          <Link to={`/${id}/edit`} state={data?.data}>
+            <button className="bg-green-500 px-4 py-2">수정</button>
           </Link>
-          <button className="bg-red-500">삭제</button>
+          <button onClick={handleDelete} className="bg-red-500 px-4 py-2">
+            삭제
+          </button>
         </div>
       </div>
     </div>
